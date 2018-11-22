@@ -15,7 +15,6 @@
 **下图为remix在线IDE的页面：**
 ![](测试ETH智能合约_files/2.jpg)
 
-
 ## 测试Solidity合约的步骤：	
 
 > ### 1.编译合约代码	（需要翻墙）		
@@ -69,7 +68,7 @@ contract JtakToken is StandardToken {
 
 * ![](测试ETH智能合约_files/6.jpg)		
 
-* 几秒后，部署成功了！	
+* 几秒之后，部署成功，然后就可以愉快地调用合约方法了！
 * ![](测试ETH智能合约_files/7.jpg)
 
 
