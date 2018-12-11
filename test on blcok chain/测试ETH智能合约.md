@@ -15,7 +15,7 @@
 **下图为remix在线IDE的页面：**
 ![](测试ETH智能合约_files/2.jpg)
 
-## 测试Solidity合约的步骤：	
+## 测试合约的三个步骤：	
 
 > ### 1.编译合约代码	（需要翻墙）		
 
@@ -25,7 +25,7 @@
 * 下图是contracts目录下的文件。		
 * ![](测试ETH智能合约_files/1.jpg)	
 
-* 如果不在本地测试，而是想在remix上测试。除了“Migrations.sol”，其他文件内，全部复制粘贴到Remix上。		
+* 如果不在本地测试，而是想在remix上测试。除了“Migrations.sol”，其他文件内容，全部复制粘贴到Remix上。		
 
 * 然后就可以选择编译器版本，开始编译了。编译后，没有红色的异常提示！说明编译成功，可以开始测试了！		
 
@@ -38,7 +38,7 @@
 * 看个例子：
 
 ```
-/*合约*/
+/*关键字：contract表明这是个合约*/
 contract JtakToken is StandardToken {
 
   string public constant name = "Just Test And Known";
@@ -47,7 +47,7 @@ contract JtakToken is StandardToken {
   uint256 public constant INITIAL_SUPPLY = 1000000000 * (10 ** uint256(decimals));
   
   /**
-  * 这个是合约的初始化方法！"_master"是一个地址类型的初始化参数！
+  * contract里面的关键字：constructor，表明这是合约的初始化方法！"_master"是一个地址类型的初始化参数！
   */
   constructor(address _master) public {
    require(_master != address(0));
@@ -83,7 +83,7 @@ contract JtakToken is StandardToken {
 * 让我们通过调用合约方法，转一笔账，就清楚了！	
 * ![](测试ETH智能合约_files/8.jpg)
 
-
+* 若手动调用方法测试觉得太麻烦，ETH框架Truffle可以用来做做单元测试！
 
 ## 一般的测试要点：	
 * 合约初始化后，Token总量、名称、小数位、分发比例、分发前后的余额等等。	

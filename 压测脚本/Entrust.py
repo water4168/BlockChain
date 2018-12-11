@@ -3,6 +3,14 @@ from locust import HttpLocust, TaskSet, task
 import json
 
 
+"""
+这是一份交易所挂单脚本，不包含触发撮合的内容
+
+挂单的策略：买单价格限制在1-5， 卖单价格限制6-10；
+无论买入卖出，首次循环时委托数量为0.0001，第二次循环为0.0002，以此类推，直到数量等于1才退出整个循环
+
+借助locust组件，每一个用户就是一个协程，每个协程初始化(on_start)后，都在不停地执行买入(entrust_in)和卖出(entrust_out)方法。
+"""
 class EntrustTask(TaskSet):
 
     def on_start(self):
@@ -25,16 +33,11 @@ class EntrustTask(TaskSet):
 
 
     #挂单买进
-    """
-    挂单的策略：买单价格限制在1-5， 卖单价格限制10-6；
-    在价格限制的范围内，循环挂单，每次0.0001的数量。
-    """
-
     @task(1)
     def entrust_in(self):
-        TentrustCount_in = 0.0001
+        TentrustCount_in = 0.0001 # 买入初始数量
         while TentrustCount_in < float(1):
-            TentrustPrice_in = int(0)
+            TentrustPrice_in = int(0)  # 买入初始价格
             for i in range(5):
                 if i < 5:
                     TentrustPrice_in += 1
@@ -56,16 +59,16 @@ class EntrustTask(TaskSet):
 
                 else:
                     print("price is over")
-            TentrustCount_in += 0.0001
+            TentrustCount_in += 0.0001  # 每for循环一次，委托数量+0.0001
             TentrustCount_in=float("%.4f" %TentrustCount_in)
 
 
     # 挂单卖出
     @task(1)
     def entrust_out(self):
-        TentrustCount_out = 0.0001
+        TentrustCount_out = 0.0001 # 卖出初始数量
         while TentrustCount_out < float(1):
-            TentrustPrice_out = int(5)
+            TentrustPrice_out = int(5) # 卖出初始价格
             for i in range(5):
                 if i < 5:
                     TentrustPrice_out += 1
@@ -81,10 +84,10 @@ class EntrustTask(TaskSet):
                     if result["status"]["msg"] != "成功":
                         print(response.text)
                     else:
-                        print('entrust_in success')
+                        print('entrust_out success')
                 else:
                     print("price is over")
-            TentrustCount_out += 0.0001
+            TentrustCount_out += 0.0001 # 每for循环一次，委托数量+0.0001
             TentrustCount_out=float("%.4f" %TentrustCount_out)
 
 
