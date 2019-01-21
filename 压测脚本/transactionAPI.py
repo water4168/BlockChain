@@ -16,6 +16,7 @@ locust默认针对HTTP的，而且ETH封装好的HTTP接口很多，只要构造
 
 所以压测公链，先弄清楚交易请求的参数是怎么生成的，然后找轮子实现即可！
 
+下面是针对联盟链fabric封装好的HTTP接口发起压测！
 '''
 S = set()
 setLength = 0
@@ -56,6 +57,7 @@ def getRanToAddress():
     return ranOne["address"]
 
 
+# 创造私钥
 def createPriKey(wifKey):
     wif_encoding_private_key = wifKey
     wifUNCompressed = bitcoin.decode_privkey(wif_encoding_private_key, 'wif_compressed')
@@ -64,7 +66,7 @@ def createPriKey(wifKey):
     pv_key = ECPrivateKey(int("0x"+decimalToHex, 16), cv) # 16进制str 转为 int
     return pv_key
 
-
+# 用私钥签名初始数据
 def getSignData(original_data,pk):
 
     json_str = json.dumps(original_data).replace(' ', '')
@@ -101,6 +103,7 @@ def makeRawData():
     return hex_sendData
 
 
+# 使用locust
 class UdoTransfer(TaskSet):
     global setLength
 
